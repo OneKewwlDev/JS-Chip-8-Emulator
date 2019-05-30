@@ -124,7 +124,42 @@ Chip8.prototype.emulateCycle = function()
         break;
         case 0x8000:
             switch(byte2 & 0x0F)
-            {}
+            {
+                case 0x0:
+                    this.V[byte1 & 0x0F] = this.V[byte2 >> 4];
+                break;
+                case 0x1:
+                    this.V[byte1 & 0x0F] |= this.V[byte2 >> 4];
+                break;
+                case 0x2:
+                    this.V[byte1 & 0x0F] &= this.V[byte2 >> 4];
+                break;
+                case 0x3:
+                    this.V[byte1 & 0x0F] ^= this.V[byte2 >> 4];
+                break;
+                case 0x4:
+                    this.V[byte1 & 0x0F] += this.V[byte2 >> 4];
+                break;
+                case 0x5:
+                    if(this.V[byte2 >> 4] < this.V[byte1 & 0x0F])
+                    {this.V[0xF] = 1;}
+                    else
+                    {this.V[0xF] = 0;}
+                    this.V[byte1 & 0x0F] -= this.V[byte2 >> 4];
+                break;
+                case 0x6:
+                    this.V[0xF] = this.V[byte1 & 0x0F] & 0x01;
+                    this.V[byte1 & 0x0F] /= 2;
+                break;
+                case 0x7:
+                    if(this.V[byte2 >> 4] > this.V[byte1 & 0x0F])
+                    {this.V[0xF] = 1;}
+                    else
+                    {this.V[0xF] = 0;}
+                    this.V[byte1 & 0x0F] = this.V[byte2 >> 4] - this.V[byte1 & 0x0F];
+                break;
+            }
+            this.pc += 2;
         break;
     }
     // Update timers
