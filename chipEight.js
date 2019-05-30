@@ -68,7 +68,9 @@ Chip8.prototype.init = function()
 Chip8.prototype.emulateCycle = function()
 {
     this.drawFlag = false;
+    this.opcode = this.memory[this.pc] << 8 | this.memory[this.pc+1];
     // Excecute opcode
+    this.pc += 2;
     // Update timers
     if(this.delayTimer > 0)
     {this.delayTimer--;}
@@ -77,5 +79,5 @@ Chip8.prototype.emulateCycle = function()
         if(this.soundTimer === 1)
         {console.log("\a");}
         this.soundTimer--;
-    
+    }
 };
