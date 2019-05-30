@@ -161,6 +161,16 @@ Chip8.prototype.emulateCycle = function()
             }
             this.pc += 2;
         break;
+        case 0x9:
+            if(this.V[byte2 >> 4] !== this.V[byte1 & 0x0F])
+            {this.pc += 4;}
+            else
+            {this.pc += 2;}
+        break;
+        case 0xA:
+            this.I = this.opcode & 0x0FFF;
+            this.pc += 2;
+        break;
     }
     // Update timers
     if(this.delayTimer > 0)
