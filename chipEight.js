@@ -114,6 +114,18 @@ Chip8.prototype.emulateCycle = function()
             else
             {this.pc += 2;}
         break;
+        case 0x6000:
+            this.V[byte1 & 0x0F] = byte2;
+            this.pc += 2;
+        break;
+        case 0x7000:
+            this.V[byte1 & 0x0F] += byte2;
+            this.pc += 2;
+        break;
+        case 0x8000:
+            switch(byte2 & 0x0F)
+            {}
+        break;
     }
     // Update timers
     if(this.delayTimer > 0)
